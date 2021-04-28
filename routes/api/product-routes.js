@@ -7,7 +7,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     // Using findAll to recieve all products.
-    const productData = Product.findAll({
+    const productData = await Product.findAll({
       include: [
         // Including the Category table, specifically the id and category_name.
         {
@@ -115,8 +115,27 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-  // delete one product by its `id` value
+// delete one product by its `id` value
+router.delete('/:id', async (req, res) => {
+  try {
+    // Create the product data that will hold the response if succesful. Usikng the destroy method in order to delete.
+    const productData = await Product.destroy({
+      // Selecting to delete where the id matches the user's requested id
+      where: {
+        id: req.params.id,
+      },
+    });
+    // If no id matches, respond with 404 status and message.
+    if (!productData) {
+      res.status(404).json({ message: 'Could not find any product with that id!'});
+      return;
+    }
+    // Success! Respond with productData formatted in json
+    res.status(200).json(productData);
+  } catch (err) {
+    // If server error, respond with the error.
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
