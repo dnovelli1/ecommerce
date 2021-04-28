@@ -35,10 +35,36 @@ router.get('/', async (req, res) => {
 });
 // ({optional}, {includes: [Tag, Category})
 // get one product
-router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
-
+router.get('/:id', async (req, res) => {
+  try {
+    // Finding one product where the id is equal to the users request
+    const productData = await Product.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: [
+        // Including both Tag and Category associated through the relationship declared on the models. Selecting specific attributes to use.
+        {
+          model: Category,
+          attributes: ['id', 'category_name'],
+        },
+        {
+          model: Tag,
+          attributes: ['id', 'tag_name']
+        },
+      ],
+    })
+    // If no product id matches the request, return status and message
+    if (!productData) {
+      res.status(404).json({ message: 'No product found by that id!' });
+      return;
+    }
+    // Success! Return productData formatted in json.
+    res.status(200).json(productData);
+  } catch (err){
+    // Server side error.
+    res.status(500).json(err);
+  }
 });
 
 // create new product
