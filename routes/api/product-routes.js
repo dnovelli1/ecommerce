@@ -38,10 +38,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     // Finding one product where the id is equal to the users request
-    const productData = await Product.findOne({
-      where: {
-        id: req.params.id,
-      },
+    const productData = await Product.findByPk(req.params.id, {
       include: [
         // Including both Tag and Category associated through the relationship declared on the models. Selecting specific attributes to use.
         {
