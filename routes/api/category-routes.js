@@ -70,7 +70,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     // Create a variable to hold response, update the category where the id matches.
-    const categoryData = await Category.update({
+    const categoryData = await Category.update(req.body, {
       where: {
         id: req.params.id,
       },
@@ -90,7 +90,7 @@ router.put('/:id', async (req, res) => {
 // Delete category.
 router.delete('/:id', async (req, res) => {
   try {
-    // Delete products that match the category_id to the user's requested id for category.
+    // Delete products that are assigned the matching category id.
     Product.destroy({
       where: {
         category_id: req.params.id,

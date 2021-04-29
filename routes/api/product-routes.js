@@ -33,8 +33,8 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   };
 });
-// ({optional}, {includes: [Tag, Category})
-// get one product
+
+// Get one product by id
 router.get('/:id', async (req, res) => {
   try {
     // Finding one product where the id is equal to the users request

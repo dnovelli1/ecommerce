@@ -12,7 +12,7 @@ Product.init(
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryLey: true,
+      primaryKey: true,
       autoIncrement: true,
     },
     product_name: {
@@ -20,7 +20,7 @@ Product.init(
       allowNull: false,
     },
     price: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       validate: {
         isDecimal: true,
@@ -36,9 +36,11 @@ Product.init(
     },
     category_id: {
       type: DataTypes.INTEGER,
-      // References the Category model's id.
+      references: {
+        model: 'category',
+        key: 'id',
+      },
     },
-
   },
   {
     sequelize,
