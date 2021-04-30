@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
     // If no data in the database, send the message.
     if (!productData) {
       res.status(404).json({ message: 'No products found!' });
-      return
+      return;
     }
     // Success! Respond with product data in json format.
     res.status(200).json(productData);

@@ -78,6 +78,7 @@ router.put('/:id', async (req, res) => {
     // If no matching id, return 404 and message.
     if (!categoryData) {
       res.status(404).json({ message: 'There is no category matching that id!' });
+      return;
     }
     // Success, update category array of objects with input from user.
     res.status(200).json(categoryData);
@@ -105,6 +106,7 @@ router.delete('/:id', async (req, res) => {
     // If no matching category id, return 404 and message
     if (!categoryData) {
       res.status(404).json({ message: 'No category found by that id!' });
+      return;
     }
     // Success! Return status 200 and category new category data in json format.
     res.status(200).json(categoryData);

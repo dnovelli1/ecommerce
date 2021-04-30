@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
     if (!tagData) {
       // If no tag data, send 404 and message.
       res.status(404).json({ message: 'No tags found!' });
+      return;
     }
     // Success! return tag data in json format
     res.status(200).json(tagData);
@@ -42,6 +43,7 @@ router.get('/:id', async (req, res) => {
     // If no data matches the id, return message and 404 status.
     if (!tagData) {
       res.status(404).json({ message: 'No tags found by that id!' });
+      return;
     }
     // Success! Return the response and 200 status.
     res.status(200).json(tagData);
@@ -76,6 +78,7 @@ router.put('/:id', async (req, res) => {
     // The id requested does not match any id in the database.
     if (!tagData) {
       res.status(404).json({ message: 'No tag found by that id!' });
+      return;
     }
     // Success! 
     res.status(200).json(tagData);
@@ -97,6 +100,7 @@ router.delete('/:id', async (req, res) => {
     // If id doesnt match any data, return the 404 and message
     if (!tagData) {
       res.status(404).json({ message: 'No tag found by that id!' });
+      return;
     }
     // Success!
     res.status(200).json(tagData);
